@@ -39,7 +39,7 @@ const mockResults = [
 ];
 
 export default function ResultsAnalysis() {
-  const [results, setResults] = useState(mockResults);
+  const [results] = useState(mockResults);
   const [selectedResults, setSelectedResults] = useState([]);
 
   const toggleResult = (id) => {
@@ -48,6 +48,14 @@ export default function ResultsAnalysis() {
         ? prev.filter((resultId) => resultId !== id)
         : [...prev, id]
     );
+  };
+
+  const toggleAllResults = (checked) => {
+    if (checked) {
+      setSelectedResults(results.map((result) => result.id));
+    } else {
+      setSelectedResults([]);
+    }
   };
 
   const filteredResults = results.filter((result) =>
@@ -73,9 +81,15 @@ export default function ResultsAnalysis() {
               <table className="min-w-full divide-y divide-gray-300">
                 <thead className="bg-gray-50">
                   <tr>
+                    <th scope="col" className="relative px-7 sm:w-12 sm:px-6">
+                      <Checkbox
+                        checked={selectedResults.length === results.length}
+                        onCheckedChange={(checked) => toggleAllResults(checked)}
+                      />
+                    </th>
                     <th
                       scope="col"
-                      className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
+                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                     >
                       Experiment Name
                     </th>
@@ -97,17 +111,17 @@ export default function ResultsAnalysis() {
                     >
                       Avg. Response Time
                     </th>
-                    <th
-                      scope="col"
-                      className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                    >
-                      Show in Chart
-                    </th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-200 bg-white">
                   {results.map((result) => (
                     <tr key={result.id}>
+                      <td className="relative px-7 sm:w-12 sm:px-6">
+                        <Checkbox
+                          checked={selectedResults.includes(result.id)}
+                          onCheckedChange={() => toggleResult(result.id)}
+                        />
+                      </td>
                       <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-6">
                         {result.name}
                       </td>
@@ -119,12 +133,6 @@ export default function ResultsAnalysis() {
                       </td>
                       <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                         {result.responseTime.toFixed(2)}s
-                      </td>
-                      <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                        <Checkbox
-                          checked={selectedResults.includes(result.id)}
-                          onCheckedChange={() => toggleResult(result.id)}
-                        />
                       </td>
                     </tr>
                   ))}

@@ -14,24 +14,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useExperiments, TestCase } from "../../contexts/ExperimentContext";
 
 export default function NewTestCase() {
   const router = useRouter();
+  const { addTestCase } = useExperiments();
   const [userMessage, setUserMessage] = useState("");
   const [expectedOutput, setExpectedOutput] = useState("");
-  const [graderType, setGraderType] = useState("");
+  const [graderType, setGraderType] = useState("exact");
   const [tags, setTags] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Here you would typically save the new test case to your backend
-    console.log("Saving new test case:", {
+    const newTestCase = {
+      id: Date.now().toString(),
       userMessage,
       expectedOutput,
       graderType,
       tags: tags.split(",").map((tag) => tag.trim()),
-    });
-    // After saving, redirect to the test cases list
+      createdAt: new Date().toISOString().split("T")[0],
+    };
+    addTestCase(newTestCase);
     router.push("/test-cases");
   };
 
@@ -62,7 +65,10 @@ export default function NewTestCase() {
           </div>
           <div>
             <Label htmlFor="grader-type">Grader Type</Label>
-            <Select value={graderType} onValueChange={setGraderType}>
+            <Select
+              value={graderType}
+              onValueChange={(value) => setGraderType(value)}
+            >
               <SelectTrigger id="grader-type" className="mt-1">
                 <SelectValue placeholder="Select a grader type" />
               </SelectTrigger>
