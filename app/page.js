@@ -34,17 +34,24 @@ import {
 import { useExperiments } from "./contexts/ExperimentContext";
 
 export default function ExperimentsDashboard() {
-  const { experiments, updateExperiment, deleteExperiment } = useExperiments();
+  const { experiments, updateExperiment, deleteExperiment, runExperiment } =
+    useExperiments();
   const [expandedExperiment, setExpandedExperiment] = useState(null);
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [experimentToDelete, setExperimentToDelete] = useState(null);
   const router = useRouter();
 
-  const runExperiment = (id) => {
+  const handleRunExperiment = (id) => {
     updateExperiment(id, { status: "Running" });
     toast({
       title: "Experiment Started",
       description: `Experiment ${id} is now running.`,
+    });
+    runExperiment(id).then(() => {
+      toast({
+        title: "Experiment Completed",
+        description: `Experiment ${id} has finished running.`,
+      });
     });
   };
 
@@ -203,7 +210,9 @@ export default function ExperimentsDashboard() {
                                   <Button
                                     variant="ghost"
                                     size="icon"
-                                    onClick={() => runExperiment(experiment.id)}
+                                    onClick={() =>
+                                      handleRunExperiment(experiment.id)
+                                    }
                                     disabled={experiment.status === "Running"}
                                   >
                                     <Play className="h-5 w-5" />

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Layout from "../components/layout";
 import {
   BarChart,
@@ -13,42 +13,26 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { Checkbox } from "@/components/ui/checkbox";
-
-const mockResults = [
-  {
-    id: "1",
-    name: "GPT-4 Baseline",
-    model: "GPT-4",
-    accuracy: 0.85,
-    responseTime: 2.3,
-  },
-  {
-    id: "2",
-    name: "Claude Comparison",
-    model: "Claude",
-    accuracy: 0.78,
-    responseTime: 1.9,
-  },
-  {
-    id: "3",
-    name: "New Prompt Test",
-    model: "GPT-4",
-    accuracy: 0.82,
-    responseTime: 2.1,
-  },
-];
+import { useExperiments } from "../contexts/ExperimentContext";
 
 export default function ResultsAnalysis() {
-  const [results] = useState(mockResults);
+  const { experiments } = useExperiments();
   const [selectedResults, setSelectedResults] = useState([]);
 
-  const toggleResult = (id) => {
-    setSelectedResults((prev) =>
-      prev.includes(id)
-        ? prev.filter((resultId) => resultId !== id)
-        : [...prev, id]
-    );
-  };
+  const results = useMemo(() => {
+    return experiments
+      .filter((exp) => exp.runs.length > 0)
+      .map((exp) => {
+        const latestRun = exp.runs[exp.runs.length - 1];
+        return {
+          id: exp.id,
+          name: exp.name,
+          model: exp.model,
+          accuracy: latestRun.aggregateScore,
+          responseTime: Math.random() * 5, // Random response time between 0 and 5 seconds
+        };
+      });
+  }, [experiments]);
 
   const toggleAllResults = (checked) => {
     if (checked) {

@@ -7,10 +7,12 @@ import { PlusCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useExperiments, TestCase } from "../contexts/ExperimentContext";
+import { useRouter } from "next/navigation";
 
 export default function TestCasesManagement() {
   const { testCases } = useExperiments();
   const [selectedTestCases, setSelectedTestCases] = useState([]);
+  const router = useRouter();
 
   const handleSelectAll = (checked) => {
     if (checked) {
@@ -136,6 +138,9 @@ export default function TestCasesManagement() {
                     <Button
                       variant="ghost"
                       className="text-indigo-600 hover:text-indigo-900"
+                      onClick={() =>
+                        router.push(`/test-cases/edit/${testCase.id}`)
+                      }
                     >
                       Edit
                     </Button>
