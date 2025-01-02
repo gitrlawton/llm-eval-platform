@@ -30,7 +30,7 @@ export default function TestCasesManagement() {
 
   return (
     <Layout>
-      <div className="space-y-4">
+      <div className="space-y-8">
         <div className="flex justify-between items-center">
           <div>
             <h1 className="text-2xl font-semibold text-gray-900">Test Cases</h1>
@@ -50,7 +50,7 @@ export default function TestCasesManagement() {
 
         <div className="overflow-x-auto rounded-lg border border-gray-200">
           <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
+            <thead className="bg-indigo-50">
               <tr>
                 <th scope="col" className="relative px-6 py-3">
                   <Checkbox

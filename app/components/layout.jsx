@@ -27,7 +27,7 @@ export default function Layout({ children }) {
         className={`bg-white w-64 min-h-screen flex-shrink-0 ${sidebarOpen ? "" : "hidden"} md:block`}
       >
         <div className="p-4">
-          <h1 className="text-2xl font-bold">LLM Experiment Platform</h1>
+          <h1 className="text-2xl font-bold">Prompt Pilot</h1>
         </div>
         <nav className="mt-8">
           {navItems.map((item) => (
@@ -48,7 +48,7 @@ export default function Layout({ children }) {
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
         {/* Top navigation */}
-        <header className="bg-white shadow-sm">
+        <header className="bg-grey shadow-sm">
           <div className="max-w-7xl mx-auto py-4 px-4 sm:px-6 lg:px-8 flex justify-between items-center">
             <button
               className="md:hidden"
@@ -56,10 +56,6 @@ export default function Layout({ children }) {
             >
               <Menu className="h-6 w-6" />
             </button>
-            <h1 className="text-lg font-semibold text-gray-900">
-              {navItems.find((item) => item.href === pathname)?.name ||
-                "Dashboard"}
-            </h1>
             <div>{/* Add user menu or other top-right components here */}</div>
           </div>
         </header>

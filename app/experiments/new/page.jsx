@@ -51,7 +51,7 @@ const availableTestCases = [
 
 export default function NewExperiment() {
   const router = useRouter();
-  const { addExperiment } = useExperiments();
+  const { addExperiment, testCases: availableTestCases } = useExperiments();
   const [experiment, setExperiment] = useState({
     name: "",
     description: "",

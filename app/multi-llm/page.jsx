@@ -66,7 +66,9 @@ export default function MultiLLMInterface() {
   return (
     <Layout>
       <div className="space-y-6">
-        <h1 className="text-2xl font-bold">Multi-LLM Interface</h1>
+        <h1 className="text-2xl font-semibold text-gray-900">
+          Multi-LLM Interface
+        </h1>
         <div className="space-y-4">
           <Textarea
             placeholder="Enter your prompt here"
@@ -77,6 +79,7 @@ export default function MultiLLMInterface() {
           <Button
             onClick={handleSubmit}
             disabled={selectedModels.length === 0 || prompt.trim() === ""}
+            className="bg-indigo-600 hover:bg-indigo-700 text-white"
           >
             Submit to Selected Models
           </Button>
@@ -108,40 +111,37 @@ export default function MultiLLMInterface() {
               </Card>
             );
           })}
-          <Card className="flex items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors h-full min-h-[300px]">
-            <CardContent>
-              <Dialog open={isAddingModel} onOpenChange={setIsAddingModel}>
-                <DialogTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    className="h-full w-full flex flex-col items-center justify-center"
-                  >
-                    <Plus className="h-12 w-12 text-gray-400 mb-2" />
-                    <span className="text-sm text-gray-500">Add Model</span>
-                  </Button>
-                </DialogTrigger>
-                <DialogContent>
-                  <DialogHeader>
-                    <DialogTitle>Select a Model</DialogTitle>
-                  </DialogHeader>
-                  <div className="grid gap-4 py-4">
-                    {availableModels
-                      .filter((model) => !selectedModels.includes(model.id))
-                      .map((model) => (
-                        <Button
-                          key={model.id}
-                          onClick={() => handleAddModel(model.id)}
-                          variant="outline"
-                          className="justify-start"
-                        >
-                          {model.name}
-                        </Button>
-                      ))}
+          <Dialog open={isAddingModel} onOpenChange={setIsAddingModel}>
+            <DialogTrigger asChild>
+              <Card className="flex items-center justify-center cursor-pointer hover:bg-indigo-50 transition-colors h-full min-h-[300px] border-2 border-dashed border-indigo-300">
+                <CardContent>
+                  <div className="flex flex-col items-center justify-center text-indigo-600 hover:text-indigo-800">
+                    <Plus className="h-12 w-12 mb-2" />
+                    <span className="text-sm">Add Model</span>
                   </div>
-                </DialogContent>
-              </Dialog>
-            </CardContent>
-          </Card>
+                </CardContent>
+              </Card>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Select a Model</DialogTitle>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                {availableModels
+                  .filter((model) => !selectedModels.includes(model.id))
+                  .map((model) => (
+                    <Button
+                      key={model.id}
+                      onClick={() => handleAddModel(model.id)}
+                      variant="outline"
+                      className="justify-start"
+                    >
+                      {model.name}
+                    </Button>
+                  ))}
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </Layout>
