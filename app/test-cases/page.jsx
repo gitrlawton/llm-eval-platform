@@ -75,7 +75,7 @@ export default function TestCasesManagement() {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Grader Type
+                  Grader
                 </th>
                 <th
                   scope="col"
@@ -87,7 +87,7 @@ export default function TestCasesManagement() {
                   scope="col"
                   className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                 >
-                  Created At
+                  Created
                 </th>
                 <th scope="col" className="relative px-6 py-3">
                   <span className="sr-only">Actions</span>

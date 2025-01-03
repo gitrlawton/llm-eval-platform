@@ -22,6 +22,10 @@ export default {
         },
         background: "white",
         accent: "#F3F4F6", // Tailwind gray-100
+        popover: {
+          DEFAULT: "white",
+          foreground: "black",
+        },
       },
     },
   },

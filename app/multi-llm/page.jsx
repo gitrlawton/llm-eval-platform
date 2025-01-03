@@ -66,9 +66,12 @@ export default function MultiLLMInterface() {
   return (
     <Layout>
       <div className="space-y-6">
-        <h1 className="text-2xl font-semibold text-gray-900">
-          Multi-LLM Interface
-        </h1>
+        <div className="space-y-2">
+          <h1 className="text-2xl font-semibold text-gray-900">Multi-LLM</h1>
+          <p className="text-sm text-gray-700">
+            Compare responses from multiple language models side by side.
+          </p>
+        </div>
         <div className="space-y-4">
           <Textarea
             placeholder="Enter your prompt here"

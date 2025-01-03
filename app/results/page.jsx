@@ -58,9 +58,7 @@ export default function ResultsAnalysis() {
     <Layout>
       <div className="sm:flex sm:items-center">
         <div className="sm:flex-auto">
-          <h1 className="text-2xl font-semibold text-gray-900">
-            Results Analysis
-          </h1>
+          <h1 className="text-2xl font-semibold text-gray-900">Results</h1>
           <p className="mt-2 text-sm text-gray-700">
             Compare performance across different experiments and models.
           </p>

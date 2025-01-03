@@ -7,10 +7,11 @@ import {
   BarChart2,
   Menu,
   SplitSquareVertical,
+  FlaskRoundIcon,
 } from "lucide-react";
 
 const navItems = [
-  { name: "Experiments", href: "/", icon: Beaker },
+  { name: "Experiments", href: "/", icon: FlaskRoundIcon },
   { name: "Test Cases", href: "/test-cases", icon: FileText },
   { name: "Results", href: "/results", icon: BarChart2 },
   { name: "Multi-LLM", href: "/multi-llm", icon: SplitSquareVertical },
@@ -24,18 +25,18 @@ export default function Layout({ children }) {
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
       <div
-        className={`bg-white w-64 min-h-screen flex-shrink-0 ${sidebarOpen ? "" : "hidden"} md:block`}
+        className={`bg-indigo-800 w-64 min-h-screen flex-shrink-0 ${sidebarOpen ? "" : "hidden"} md:block`}
       >
         <div className="p-4">
-          <h1 className="text-2xl font-bold">Prompt Pilot</h1>
+          <h1 className="text-2xl font-bold text-white">Prompt Pilot</h1>
         </div>
         <nav className="mt-8">
           {navItems.map((item) => (
             <Link
               key={item.name}
               href={item.href}
-              className={`flex items-center px-4 py-2 text-gray-700 hover:bg-gray-200 ${
-                pathname === item.href ? "bg-gray-200" : ""
+              className={`flex items-center px-4 py-2 text-gray-200 hover:bg-indigo-700 ${
+                pathname === item.href ? "bg-indigo-700 text-white" : ""
               }`}
             >
               <item.icon className="mr-3 h-5 w-5" />
