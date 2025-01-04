@@ -15,9 +15,11 @@ import {
 } from "@/components/ui/dialog";
 
 const availableModels = [
-  { id: "gpt4", name: "GPT-4" },
-  { id: "gpt35", name: "GPT-3.5-turbo" },
-  { id: "claude", name: "Claude" },
+  { id: "gemma2-9b-it", name: "Google Gemma 2" },
+  { id: "llama-3.3-70b-versatile", name: "Meta Llama 3.3 70b" },
+  { id: "llama-3.1-8b-instant", name: "Meta Llama 3.1 8b" },
+  { id: "llama3-70b-8192", name: "Meta Llama 3 70b" },
+  { id: "mixtral-8x7b-32768", name: "Mistral Mixtral 7b" },
 ];
 
 export default function MultiLLMInterface() {
@@ -43,24 +45,27 @@ export default function MultiLLMInterface() {
   };
 
   const handleSubmit = async () => {
-    const simulateApiCall = (model) => {
-      return new Promise((resolve) => {
-        setTimeout(() => {
-          resolve(
-            `This is a simulated response from ${model} for the prompt: "${prompt}"`
-          );
-        }, 1000);
+    try {
+      const response = await fetch("/api/compare", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          prompt: prompt,
+          models: selectedModels,
+        }),
       });
-    };
 
-    const newResponses = {};
-    for (const modelId of selectedModels) {
-      const model = availableModels.find((m) => m.id === modelId);
-      if (model) {
-        newResponses[model.id] = await simulateApiCall(model.name);
+      if (!response.ok) {
+        throw new Error("Failed to fetch responses");
       }
+
+      const data = await response.json();
+      setResponses(data.responses);
+    } catch (error) {
+      console.error("Error submitting prompt:", error);
     }
-    setResponses(newResponses);
   };
 
   return (
@@ -69,7 +74,7 @@ export default function MultiLLMInterface() {
         <div className="space-y-2">
           <h1 className="text-2xl font-semibold text-gray-900">Multi-LLM</h1>
           <p className="text-sm text-gray-700">
-            Compare responses from multiple language models side by side.
+            Compare responses from multiple large language models side by side.
           </p>
         </div>
         <div className="space-y-4">
